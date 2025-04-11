@@ -9,7 +9,7 @@ export default function App() {
 
   const fetchTokens = async () => {
     try {
-      const response = await fetch("/api/tokens");
+      const response = await fetch("https://price.jup.ag/v4/price?ids=ALL");
 
       if (!response.ok) throw new Error("API request failed");
 

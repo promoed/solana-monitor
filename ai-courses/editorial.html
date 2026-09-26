@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Гид по курсам ИИ</title>
+<meta name="description" content="Какой курс по нейросетям выбрать: карта курсов, подбор под ваш сценарий и сравнение.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf9f5;
+  --bg-2:#f0eee6;
+  --paper:#ffffff;
+  --ink:#141413;
+  --ink-2:#3d3d3a;
+  --muted:#73726c;
+  --line:#e3e0d5;
+  --line-2:#cfccbf;
+  --clay:#d97757;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"Golos Text",-apple-system,"Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.22,.8,.26,1);
+  --col:680px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 18px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:#f3d9cd}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.col{max-width:var(--col);margin:0 auto}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.015em}
+p+p{margin-top:1em}
+.prose p{color:var(--ink-2)}
+.prose strong{color:var(--ink);font-weight:600}
+
+/* ---------- header ---------- */
+.top{position:sticky;top:0;z-index:50;background:rgba(250,249,245,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
+.top.scrolled{border-color:var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{display:flex;align-items:center;gap:10px;font:600 15px var(--sans);text-decoration:none}
+.brand svg{width:22px;height:22px}
+.top nav{display:flex;gap:28px;font-size:15px}
+.top nav a{text-decoration:none;color:var(--muted);transition:color .2s}
+.top nav a:hover,.top nav a.on{color:var(--ink)}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;background:var(--clay);width:0}
+
+/* ---------- hero ---------- */
+.hero{padding:96px 0 40px}
+.hero h1{font-size:clamp(42px,7vw,88px);line-height:1.02;margin:22px 0 28px;max-width:14ch}
+.hero .lede{font-size:clamp(19px,2.2vw,23px);line-height:1.5;color:var(--ink-2);max-width:36em}
+.hero-meta{display:flex;gap:28px;flex-wrap:wrap;margin-top:36px;padding-top:20px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.hero-meta b{color:var(--ink);font-weight:500}
+.hero-art{margin:56px 0 0;border-radius:4px;background:var(--bg-2);aspect-ratio:21/8;position:relative;overflow:hidden}
+.hero-art svg{position:absolute;inset:0;width:100%;height:100%}
+
+/* ---------- sections ---------- */
+section.chapter{padding:110px 0 40px}
+.chapter-head{margin-bottom:34px}
+.chapter-head .eyebrow{display:block;margin-bottom:16px}
+.chapter-head h2{font-size:clamp(32px,4.4vw,52px);line-height:1.1}
+figure.fig{margin:56px auto 0}
+figcaption{font-size:13px;color:var(--muted);margin-top:14px;line-height:1.5}
+figcaption b{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-right:8px}
+
+/* ---------- skills grid ---------- */
+.skill-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.pill{padding:8px 14px;border:1px solid var(--line-2);border-radius:999px;font-size:14px;color:var(--ink-2);transition:background .25s,color .25s,border-color .25s}
+.pill:hover{border-color:var(--ink)}
+.pill.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pill i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:1px}
+.skills{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.skill{position:relative;padding:16px 14px 14px;min-height:92px;background:var(--paper);border:1px solid var(--line);border-radius:4px;
+  font-size:14px;line-height:1.3;color:var(--muted);overflow:hidden;
+  transition:color .45s var(--ease),border-color .45s var(--ease),transform .45s var(--ease)}
+.skill small{display:block;font:500 10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--line-2);margin-bottom:10px;transition:color .45s}
+.skill::after{content:"";position:absolute;inset:0;background:var(--c,var(--clay));opacity:0;transform:scaleY(0);transform-origin:bottom;
+  transition:transform .55s var(--ease),opacity .45s;z-index:0}
+.skill span,.skill small{position:relative;z-index:1}
+.skill.hit{color:#fff;border-color:transparent;transform:translateY(-2px)}
+.skill.hit small{color:rgba(255,255,255,.75)}
+.skill.hit::after{opacity:1;transform:none}
+.skills-note{display:flex;justify-content:space-between;margin-top:14px;font-size:14px;color:var(--muted)}
+.skills-note b{font:500 14px var(--mono);color:var(--ink)}
+
+/* ---------- scrolly map ---------- */
+.scrolly{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;margin-top:40px}
+.steps{padding:10vh 0 30vh}
+.step{min-height:72vh;display:flex;align-items:center}
+.step .card{padding:24px 26px;background:var(--paper);border:1px solid var(--line);border-radius:4px;opacity:.35;transition:opacity .5s,box-shadow .5s,border-color .5s}
+.step.on .card{opacity:1;border-color:var(--line-2);box-shadow:0 18px 40px -28px rgba(20,20,19,.35)}
+.step h3{font-size:24px;line-height:1.2;margin:8px 0 10px}
+.step p{font-size:16px;color:var(--ink-2)}
+.step .facts{display:flex;gap:18px;margin-top:14px;font:500 12px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em;flex-wrap:wrap}
+.sticky{position:sticky;top:90px;height:calc(100vh - 120px);display:flex;flex-direction:column;justify-content:center}
+.map{width:100%;height:auto;overflow:visible}
+.map .axis{stroke:var(--line-2);stroke-width:1}
+.map .grid{stroke:var(--line);stroke-width:1;stroke-dasharray:2 5}
+.map .ax-label{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.map .quad{font:italic 400 15px var(--serif);fill:var(--line-2);transition:fill .5s}
+.map .dot{transition:transform .9s var(--ease),opacity .5s}
+.map .dot circle.halo{opacity:0;transition:opacity .5s,r .5s}
+.map .dot.focus circle.halo{opacity:.18}
+.map .dot text{font:500 13px var(--sans);fill:var(--ink);opacity:0;transition:opacity .4s}
+.map .dot.focus text,.map.show-labels .dot text{opacity:1}
+.map.dim .dot:not(.focus){opacity:.18}
+#youMap .dot text{font-size:24px;font-weight:600}
+#youMap .quad{display:none}
+#youMap .ax-label{font-size:17px}
+#youMap .you text{font-size:22px!important}
+.map .you{transition:transform .7s var(--ease)}
+.map .link{stroke:var(--ink);stroke-width:1;stroke-dasharray:3 4;transition:all .7s var(--ease)}
+
+/* ---------- explorer ---------- */
+.explorer{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:0;margin-top:48px;border:1px solid var(--line-2);border-radius:6px;background:var(--paper);overflow:hidden}
+.controls{padding:30px;border-right:1px solid var(--line);background:var(--bg)}
+.ctrl{padding:18px 0;border-bottom:1px solid var(--line)}
+.ctrl:first-child{padding-top:0}
+.ctrl:last-child{border:0;padding-bottom:0}
+.ctrl label,.ctrl .lbl{display:flex;justify-content:space-between;align-items:baseline;font-size:15px;font-weight:500;margin-bottom:12px}
+.ctrl output{font:500 13px var(--mono);color:var(--clay)}
+.ctrl .ends{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:6px}
+.goal{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.goal .pill{border-radius:4px;text-align:left;font-size:13.5px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:20px;background:transparent}
+input[type=range]::-webkit-slider-runnable-track{height:2px;background:linear-gradient(var(--ink),var(--ink)) 0/var(--fill,50%) 100% no-repeat,var(--line-2)}
+input[type=range]::-moz-range-track{height:2px;background:var(--line-2)}
+input[type=range]::-moz-range-progress{height:2px;background:var(--ink)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:-8px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);transition:transform .2s}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--paper);border:2px solid var(--ink)}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.2)}
+input[type=range]:focus-visible{outline:2px solid var(--clay);outline-offset:4px}
+.outputs{padding:30px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px}
+.outputs h4{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.rank{position:relative;list-style:none}
+.rank li{position:relative;padding:12px 0;border-bottom:1px solid var(--line);will-change:transform}
+.rank li:last-child{border:0}
+.rank .r-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:15px;margin-bottom:8px}
+.rank .r-top b{font-weight:500}
+.rank .r-top span{font:500 13px var(--mono);white-space:nowrap}
+.rank .r-school{font-size:12.5px;color:var(--muted);margin:-6px 0 8px}
+.rank .bar{height:6px;background:var(--bg-2);border-radius:3px;overflow:hidden}
+.rank .bar i{display:block;height:100%;border-radius:3px;transition:width .8s var(--ease)}
+.rank li.lead .r-top b::before{content:"★ ";color:var(--clay)}
+.verdict{margin-top:22px;padding:18px 20px;background:var(--bg);border-left:3px solid var(--clay);font-size:15px;line-height:1.5;color:var(--ink-2)}
+.verdict b{color:var(--ink);font-weight:600}
+.verdict a{color:var(--clay);text-decoration:none;font-weight:500;white-space:nowrap}
+
+/* ---------- findings ---------- */
+.finding{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;padding:56px 0;border-top:1px solid var(--line)}
+.finding:first-of-type{border-top:0}
+.finding .num{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--clay)}
+.finding h3{font-size:clamp(26px,3vw,34px);line-height:1.15;margin:12px 0 14px}
+.finding p{font-size:17px;color:var(--ink-2)}
+.hbars{list-style:none}
+.hbars li{display:grid;grid-template-columns:190px 1fr 86px;gap:14px;align-items:center;padding:9px 0;font-size:14px}
+.hbars .t{color:var(--ink-2);line-height:1.25}
+.hbars .t small{display:block;color:var(--muted);font-size:12px}
+.hbars .track{height:22px;background:var(--bg-2);border-radius:2px;position:relative;overflow:hidden}
+.hbars .track i{position:absolute;inset:0 auto 0 0;width:0;border-radius:2px;transition:width 1.1s var(--ease)}
+.hbars .v{font:500 13px var(--mono);text-align:right}
+.levels{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.levels div{padding:18px 16px;border-right:1px solid var(--line);background:var(--paper)}
+.levels div:last-child{border:0}
+.levels .eyebrow{display:block;margin-bottom:14px}
+.levels .chip{display:flex;align-items:center;gap:8px;font-size:14px;margin-top:8px;line-height:1.3}
+.levels .chip i{flex:none;width:10px;height:10px;border-radius:50%}
+
+/* ---------- catalog ---------- */
+.tabs{display:flex;gap:26px;border-bottom:1px solid var(--line);margin-bottom:8px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{position:relative;padding:12px 0;font-size:15px;color:var(--muted);white-space:nowrap;transition:color .2s}
+.tab sup{font:500 10px var(--mono);margin-left:3px}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--ink)}
+.tab::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--ink);transform:scaleX(0);transition:transform .35s var(--ease)}
+.tab.on::after{transform:none}
+.list{list-style:none}
+.row{border-bottom:1px solid var(--line);animation:rowIn .5s var(--ease) both}
+@keyframes rowIn{from{opacity:0;transform:translateY(10px)}}
+.row-head{width:100%;display:grid;grid-template-columns:48px minmax(0,1fr) 110px 110px 28px;gap:20px;align-items:center;padding:26px 0;text-align:left}
+.row-head .n{font:500 13px var(--mono);color:var(--muted)}
+.row-head h3{font-size:26px;line-height:1.15;transition:color .2s}
+.row-head:hover h3{color:var(--clay)}
+.row-head .sub{display:block;font-size:14px;color:var(--muted);margin-top:4px}
+.row-head .sub i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:1px}
+.row-head .m{font-size:14px;color:var(--ink-2)}
+.row-head .m small{display:block;font:500 10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.plus{width:28px;height:28px;border:1px solid var(--line-2);border-radius:50%;position:relative;transition:transform .45s var(--ease),background .3s}
+.plus::before,.plus::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:1.5px;background:var(--ink);transform:translate(-50%,-50%)}
+.plus::after{transform:translate(-50%,-50%) rotate(90deg)}
+.row.open .plus{transform:rotate(45deg);background:var(--bg-2)}
+.row-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease)}
+.row.open .row-body{grid-template-rows:1fr}
+.row-body>div{overflow:hidden}
+.row-inner{display:grid;grid-template-columns:48px minmax(0,1.3fr) minmax(0,1fr);gap:20px;padding:0 0 34px}
+.row-inner p{font-size:17px;color:var(--ink-2)}
+.row-inner ul{list-style:none;margin-top:16px}
+.row-inner li{padding:6px 0 6px 22px;position:relative;font-size:15px;color:var(--ink-2)}
+.row-inner li::before{content:"";position:absolute;left:0;top:14px;width:10px;height:1.5px;background:var(--clay)}
+.spec{font-size:14px}
+.spec div{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}
+.spec span{color:var(--muted)}
+.spec b{font-weight:500;text-align:right}
+.go{display:inline-flex;align-items:center;gap:10px;margin-top:20px;padding:12px 18px;background:var(--ink);color:var(--bg);border-radius:4px;font-size:15px;text-decoration:none;transition:background .25s,gap .25s}
+.go:hover{background:var(--clay);gap:14px}
+
+/* ---------- outro ---------- */
+.outro{padding:120px 0 60px}
+.outro h2{font-size:clamp(32px,4.4vw,52px);line-height:1.1;margin-bottom:22px}
+.fine{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);line-height:1.6}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:900px){
+  body{font-size:17px}
+  .top nav{display:none}
+  .hero{padding:56px 0 24px}
+  .skills{grid-template-columns:repeat(2,1fr)}
+  .scrolly{display:flex;flex-direction:column;gap:0}
+  .sticky{order:-1;top:60px;height:auto;padding:8px 0 4px;background:var(--bg);z-index:4;box-shadow:0 12px 16px -12px rgba(20,20,19,.12)}
+  .sticky figcaption{display:none}
+  #storyMap .dot text{font-size:24px;font-weight:600}
+  #storyMap .quad{display:none}
+  .map .ax-label{font-size:17px}
+  .goal .pill{font-size:13px;padding:8px 10px}
+  .steps{padding:10vh 0 30vh;position:relative;z-index:3}
+  .step{min-height:60vh}
+  .step .card{opacity:.92}
+  .explorer{grid-template-columns:1fr}
+  .controls{border-right:0;border-bottom:1px solid var(--line)}
+  .outputs{grid-template-columns:1fr;padding:24px}
+  .controls{padding:24px}
+  .finding{grid-template-columns:1fr;gap:28px;padding:40px 0}
+  .hbars li{grid-template-columns:120px 1fr 64px;gap:10px}
+  .levels{grid-template-columns:1fr}
+  .levels div{border-right:0;border-bottom:1px solid var(--line)}
+  .row-head{grid-template-columns:32px minmax(0,1fr) 28px;gap:12px}
+  .row-head .m{display:none}
+  .row-head h3{font-size:21px}
+  .row-inner{grid-template-columns:1fr;padding-left:44px}
+  .row-inner>span{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="#">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="7" cy="8" r="3" fill="#d97757"/><circle cx="17" cy="7" r="2.4" fill="#6a9bcc"/><circle cx="12" cy="17" r="3.4" fill="#788c5d"/><path d="M7 8 17 7 12 17Z" stroke="#141413" stroke-width="1"/></svg>
+      Гид по курсам ИИ
+    </a>
+    <nav>
+      <a href="#skills">Навыки</a>
+      <a href="#map">Карта</a>
+      <a href="#scenario">Подбор</a>
+      <a href="#findings">Сравнение</a>
+      <a href="#catalog">Все курсы</a>
+    </nav>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main>
+  <!-- ================= HERO ================= -->
+  <section class="hero wrap">
+    <span class="eyebrow rv">Гид · Сентябрь 2026</span>
+    <h1 class="rv">Какой курс по нейросетям выбрать?</h1>
+    <p class="lede rv">Курсов по искусственному интеллекту стало так много, что выбрать между ними почти так же сложно, как освоить сам ИИ. Мы разобрали пять программ — что в них внутри, чем они отличаются и кому подходит каждая.</p>
+    <div class="hero-meta rv">
+      <span><b id="mCourses">5</b> курсов</span>
+      <span><b id="mSchools">4</b> школы</span>
+      <span><b>~7 минут</b> чтения</span>
+      <span>Или сразу к <a href="#scenario">подбору&nbsp;→</a></span>
+    </div>
+    <div class="hero-art rv" aria-hidden="true"><svg id="heroArt" viewBox="0 0 1050 400" preserveAspectRatio="xMidYMid slice"></svg></div>
+  </section>
+
+  <!-- ================= 1. SKILLS ================= -->
+  <section class="chapter" id="skills">
+    <div class="wrap">
+      <div class="col">
+        <div class="chapter-head rv"><span class="eyebrow">Глава 1</span><h2>Курс — это набор навыков</h2></div>
+        <div class="prose rv">
+          <p>Названия курсов похожи: «нейросети для бизнеса», «нейросети на практике». Но если разложить каждую программу на конкретные навыки, становится видно, насколько по-разному они устроены.</p>
+          <p>Ниже — <strong>шестнадцать навыков</strong>, которые встречаются в курсах по ИИ. Выберите курс, чтобы увидеть, какие из них он покрывает.</p>
+        </div>
+      </div>
+      <figure class="fig col rv" style="max-width:880px">
+        <div class="skill-tabs" id="skillTabs"></div>
+        <div class="skills" id="skills-grid"></div>
+        <div class="skills-note"><span id="skillsCaption">Выберите курс</span><span>Покрытие: <b id="skillsCount">0 / 16</b></span></div>
+        <figcaption><b>Рис. 1</b>Навыки, которые даёт каждый курс. Составлено по описаниям программ; состав уточняйте на сайтах школ.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= 2. MAP (scrolly) ================= -->
+  <section class="chapter" id="map">
+    <div class="wrap">
+      <div class="col">
+        <div class="chapter-head rv"><span class="eyebrow">Глава 2</span><h2>Карта курсов</h2></div>
+        <div class="prose rv">
+          <p>Удобнее всего сравнивать курсы по двум осям. <strong>По горизонтали</strong> — техническая глубина: от «пользуюсь готовыми инструментами» до «собираю собственные системы». <strong>По вертикали</strong> — для кого результат: для вас лично или для процессов компании.</p>
+        </div>
+      </div>
+      <div class="scrolly">
+        <div class="steps" id="steps"></div>
+        <div class="sticky"><svg class="map" id="storyMap" viewBox="0 0 640 520"></svg>
+          <figcaption style="text-align:center"><b>Рис. 2</b>Положение курсов — экспертная оценка по программе обучения.</figcaption>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. SCENARIO ================= -->
+  <section class="chapter" id="scenario">
+    <div class="wrap">
+      <div class="col">
+        <div class="chapter-head rv"><span class="eyebrow">Глава 3</span><h2>Ваш сценарий</h2></div>
+        <div class="prose rv">
+          <p>Идеального курса не существует — есть курс, который подходит под <strong>вашу</strong> задачу, опыт, время и бюджет. Задайте параметры, и модель пересчитает совпадение для каждой программы.</p>
+        </div>
+      </div>
+      <div class="explorer rv">
+        <div class="controls">
+          <div class="ctrl"><span class="lbl">Главная цель</span><div class="goal" id="goal"></div></div>
+          <div class="ctrl">
+            <label for="tech">Техническая глубина <output id="techOut"></output></label>
+            <input type="range" id="tech" min="0" max="100" value="30">
+            <div class="ends"><span>Готовые сервисы</span><span>Свои системы</span></div>
+          </div>
+          <div class="ctrl">
+            <label for="months">Готов учиться <output id="monthsOut"></output></label>
+            <input type="range" id="months" min="1" max="6" step="0.5" value="2">
+            <div class="ends"><span>1 мес</span><span>6 мес</span></div>
+          </div>
+          <div class="ctrl">
+            <label for="budget">Бюджет до <output id="budgetOut"></output></label>
+            <input type="range" id="budget" min="20000" max="150000" step="5000" value="60000">
+            <div class="ends"><span>20 тыс</span><span>150 тыс</span></div>
+          </div>
+        </div>
+        <div class="outputs">
+          <div>
+            <h4>Совпадение</h4>
+            <ol class="rank" id="rank"></ol>
+          </div>
+          <div>
+            <h4>Вы на карте</h4>
+            <svg class="map" id="youMap" viewBox="0 0 640 520"></svg>
+            <div class="verdict" id="verdict"></div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="col" style="text-align:center;margin-top:16px"><b>Модель</b>Цель — 40%, глубина — 25%, срок — 20%, бюджет — 15%. Это ориентир, а не приговор.</figcaption>
+    </div>
+  </section>
+
+  <!-- ================= 4. FINDINGS ================= -->
+  <section class="chapter" id="findings">
+    <div class="wrap">
+      <div class="col">
+        <div class="chapter-head rv"><span class="eyebrow">Глава 4</span><h2>Что показывает сравнение</h2></div>
+      </div>
+      <div class="finding rv">
+        <div><span class="num">Наблюдение 1 · Время</span><h3>Длительность отличается в&nbsp;несколько раз</h3>
+          <p>Быстрые курсы дают инструменты для личной работы. Длинные — профессию: внедрение, интеграции, агентов.</p></div>
+        <ul class="hbars" id="barsDur"></ul>
+      </div>
+      <div class="finding rv">
+        <div><span class="num">Наблюдение 2 · Деньги</span><h3>Курсы-профессии стоят в&nbsp;2–3&nbsp;раза дороже</h3>
+          <p>Курсы из правой части карты дороже: в них больше практики, наставников и проектной работы. Короткие курсы для себя и маркетинга — самый доступный вход.</p></div>
+        <ul class="hbars" id="barsPrice"></ul>
+      </div>
+      <div class="finding rv">
+        <div><span class="num">Наблюдение 3 · Порог входа</span><h3 id="lvlTitle">Большинство курсов подходят новичкам</h3>
+          <p>Если вы только начинаете, не стоит сразу идти на агентов: сначала освойте промпты и готовые инструменты.</p></div>
+        <div class="levels" id="levels"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 5. CATALOG ================= -->
+  <section class="chapter" id="catalog">
+    <div class="wrap">
+      <div class="col" style="max-width:none">
+        <div class="chapter-head rv"><span class="eyebrow">Приложение</span><h2>Все курсы</h2></div>
+      </div>
+      <div class="tabs" id="tabs"></div>
+      <ol class="list" id="list"></ol>
+    </div>
+  </section>
+
+  <!-- ================= OUTRO ================= -->
+  <section class="outro wrap">
+    <div class="col">
+      <h2 class="rv">Выбор за вами</h2>
+      <div class="prose rv">
+        <p>Лучший курс — тот, который вы закончите. Выбирайте программу под конкретную задачу, которую хотите решить в ближайшие три месяца, а не «на будущее».</p>
+        <p><a href="#scenario">Вернуться к подбору ↑</a></p>
+      </div>
+      <p class="fine">Цены, сроки и состав программ ориентировочные и могут меняться — актуальные условия смотрите на сайтах школ. Положение на карте и оценка совпадения — экспертная модель, а не рейтинг.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+/* =====================================================================
+   ДАННЫЕ
+   Новый курс — добавьте объект в COURSES; новая тема — в TOPICS.
+   x — техническая глубина (0…1), y — фокус: 0 личное → 1 бизнес.
+   ⚠ duration / price / skills — заглушки, сверьте с сайтами школ.
+   ===================================================================== */
+const TOPICS = [
+  { id:'business',  label:'Для бизнеса',   y:.85 },
+  { id:'marketing', label:'Для маркетинга', y:.6  },
+  { id:'personal',  label:'Для себя',       y:.15 },
+  { id:'agents',    label:'ИИ-агенты',      y:.7, tech:75 },
+];
+
+const SKILLS = [
+  { id:'prompt',   label:'Промпт-инжиниринг',        g:'Основа' },
+  { id:'text',     label:'Генерация текстов',         g:'Контент' },
+  { id:'image',    label:'Изображения и дизайн',      g:'Контент' },
+  { id:'video',    label:'Видео и голос',             g:'Контент' },
+  { id:'research', label:'Исследование аудитории',    g:'Маркетинг' },
+  { id:'ads',      label:'Креативы и реклама',        g:'Маркетинг' },
+  { id:'data',     label:'Анализ данных',             g:'Аналитика' },
+  { id:'effect',   label:'Оценка экономического эффекта', g:'Бизнес' },
+  { id:'strategy', label:'Стратегия внедрения',       g:'Бизнес' },
+  { id:'process',  label:'Перестройка процессов',     g:'Бизнес' },
+  { id:'nocode',   label:'No-code автоматизация',     g:'Автоматизация' },
+  { id:'bots',     label:'Чат-боты',                  g:'Автоматизация' },
+  { id:'api',      label:'Интеграции по API',         g:'Техника' },
+  { id:'rag',      label:'Базы знаний (RAG)',         g:'Техника' },
+  { id:'agents',   label:'Проектирование агентов',    g:'Техника' },
+  { id:'prod',     label:'Запуск в продакшн',         g:'Техника' },
+];
+
+const COURSES = [
+  { id:'eduson-ai', school:'Eduson Academy', color:'#c9a227',
+    title:'Нейросети на практике', url:'https://eduson.academy/ai',
+    desc:'Практический курс для себя, работы и бизнеса: тексты, картинки, видео, аналитика — без программирования.',
+    topics:['personal','business'], level:'С нуля', levelKey:0,
+    durationMonths:1.5, duration:'~1,5 мес', price:30000,
+    format:'Онлайн в своём темпе', audience:'Всем, кто хочет работать быстрее с ИИ', result:'Сертификат',
+    x:.12, y:.28,
+    skills:['prompt','text','image','video','data','nocode'],
+    story:'Самый короткий и доступный вход. Курс про личную продуктивность: как с помощью нейросетей быстрее писать, рисовать и анализировать.' },
+  { id:'yp-marketing', school:'Яндекс Практикум', color:'#6a9bcc',
+    title:'Нейросети для маркетинга', url:'https://practicum.yandex.ru/ai-for-marketing/',
+    desc:'ИИ в работе маркетолога: контент, креативы, исследования аудитории и аналитика кампаний.',
+    topics:['marketing'], level:'С нуля', levelKey:0,
+    durationMonths:2, duration:'~2 мес', price:45000,
+    format:'Онлайн, практика на кейсах', audience:'Маркетологам, SMM и контент-специалистам', result:'Удостоверение о повышении квалификации',
+    x:.3, y:.58,
+    skills:['prompt','text','image','video','research','ads','data'],
+    story:'Узкая специализация: всё, что нужно маркетологу. Много контента и креативов, минимум техники.' },
+  { id:'yp-business', school:'Яндекс Практикум', color:'#d97757',
+    title:'Нейросети для бизнеса', url:'https://practicum.yandex.ru/ai-for-business/',
+    desc:'Как внедрять ИИ в процессы компании: от поиска точек роста до расчёта эффекта.',
+    topics:['business'], level:'С нуля', levelKey:0,
+    durationMonths:2, duration:'~2 мес', price:45000,
+    format:'Онлайн, практика на кейсах', audience:'Руководители, предприниматели, менеджеры', result:'Удостоверение о повышении квалификации',
+    x:.3, y:.88,
+    skills:['prompt','text','data','effect','strategy','process','nocode'],
+    story:'Курс для тех, кто принимает решения. Не столько «как пользоваться», сколько «где ИИ окупится».' },
+  { id:'gb-integration', school:'GeekBrains', color:'#788c5d',
+    title:'Специалист по внедрению ИИ', url:'https://gb.ru/s/ai-integration-specialist',
+    desc:'Интеграция нейросетей в бизнес-процессы: автоматизация, чат-боты, no-code инструменты и API.',
+    topics:['business','agents'], level:'Базовый', levelKey:1,
+    durationMonths:4, duration:'~4 мес', price:90000,
+    format:'Онлайн, вебинары и проекты', audience:'Тем, кто хочет стать интегратором ИИ в компании', result:'Диплом о профпереподготовке',
+    x:.6, y:.78,
+    skills:['prompt','text','data','strategy','process','nocode','bots','api','rag'],
+    story:'Новая профессия на стыке бизнеса и техники: вы не только придумываете, где нужен ИИ, но и сами его подключаете.' },
+  { id:'netology-agents', school:'Нетология', color:'#b46287',
+    title:'ИИ-агенты', url:'https://netology.ru/programs/agin',
+    desc:'Проектирование и запуск ИИ-агентов, которые самостоятельно выполняют цепочки задач.',
+    topics:['agents','business'], level:'Средний', levelKey:2,
+    durationMonths:3, duration:'~3 мес', price:70000,
+    format:'Онлайн, практика с наставником', audience:'Продактам, аналитикам, разработчикам, автоматизаторам', result:'Диплом / удостоверение',
+    x:.88, y:.66,
+    skills:['prompt','nocode','bots','api','rag','agents','prod'],
+    story:'Самый технический курс в подборке. Агенты — следующий шаг после чат-ботов: они сами планируют и выполняют задачи.' },
+];
+
+/* ===================================================================== */
+const $ = s => document.querySelector(s);
+const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const topicLabel = id => TOPICS.find(t => t.id===id)?.label || id;
+const NS = 'http://www.w3.org/2000/svg';
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+$('#mCourses').textContent = COURSES.length;
+$('#mSchools').textContent = new Set(COURSES.map(c=>c.school)).size;
+
+/* ---------- header progress ---------- */
+addEventListener('scroll', () => {
+  const h = document.documentElement;
+  $('#progress').style.width = (h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  $('#top').classList.toggle('scrolled', h.scrollTop > 10);
+}, { passive:true });
+
+/* ---------- hero art: курсы как созвездие ---------- */
+(function heroArt(){
+  const svg = $('#heroArt');
+  const W = 1050, H = 400;
+  let html = '';
+  // фоновые точки-навыки
+  for(let i=0;i<120;i++){
+    const x = (i*97)%W, y = (i*53 + (i%7)*31)%H;
+    html += `<circle cx="${x}" cy="${y}" r="${1.2+(i%3)*.6}" fill="#cfccbf"/>`;
+  }
+  COURSES.forEach((c,i) => {
+    const cx = 120 + c.x*800, cy = 340 - c.y*280;
+    c.skills.forEach((s,j) => {
+      const a = j/c.skills.length*Math.PI*2 + i, r = 34 + (j%3)*16;
+      const sx = cx + Math.cos(a)*r*1.4, sy = cy + Math.sin(a)*r;
+      html += `<line x1="${cx}" y1="${cy}" x2="${sx}" y2="${sy}" stroke="${c.color}" stroke-opacity=".45" stroke-width="1"/>
+               <circle cx="${sx}" cy="${sy}" r="3" fill="${c.color}" opacity=".7"/>`;
+    });
+    html += `<g class="h-dot" style="--d:${i*.6}s"><circle cx="${cx}" cy="${cy}" r="14" fill="${c.color}"/></g>`;
+  });
+  svg.innerHTML = html + `<style>.h-dot{animation:breathe 5s var(--d) ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+    @keyframes breathe{50%{transform:scale(1.25)}}</style>`;
+})();
+
+/* ---------- 1. skills grid ---------- */
+const skillState = { id: COURSES[0].id };
+function renderSkillTabs(){
+  $('#skillTabs').innerHTML = COURSES.map(c =>
+    `<button class="pill ${skillState.id===c.id?'on':''}" data-id="${c.id}"><i style="background:${c.color}"></i>${esc(c.title)}</button>`).join('');
+}
+$('#skills-grid').innerHTML = SKILLS.map(s => `<div class="skill" data-s="${s.id}"><small>${s.g}</small><span>${s.label}</span></div>`).join('');
+function paintSkills(){
+  const c = COURSES.find(x=>x.id===skillState.id);
+  document.querySelectorAll('.skill').forEach((el,i) => {
+    const hit = c.skills.includes(el.dataset.s);
+    el.style.setProperty('--c', c.color);
+    el.style.transitionDelay = (reduce ? 0 : i*25) + 'ms';
+    el.classList.toggle('hit', hit);
+  });
+  $('#skillsCount').textContent = `${c.skills.length} / ${SKILLS.length}`;
+  $('#skillsCaption').innerHTML = `<b style="font-weight:500;color:var(--ink)">${esc(c.title)}</b> · ${esc(c.school)}`;
+}
+$('#skillTabs').addEventListener('click', e => {
+  const b = e.target.closest('.pill'); if(!b) return;
+  skillState.id = b.dataset.id; renderSkillTabs(); paintSkills();
+});
+renderSkillTabs(); paintSkills();
+
+/* ---------- map builder (shared) ---------- */
+const M = { l:70, r:600, t:30, b:450 };
+const px = x => M.l + x*(M.r-M.l);
+const py = y => M.b - y*(M.b-M.t);
+function buildMap(svg, { you=false } = {}){
+  let g = '';
+  [.25,.5,.75].forEach(v => {
+    g += `<line class="grid" x1="${px(v)}" y1="${M.t}" x2="${px(v)}" y2="${M.b}"/>`;
+    g += `<line class="grid" x1="${M.l}" y1="${py(v)}" x2="${M.r}" y2="${py(v)}"/>`;
+  });
+  g += `<line class="axis" x1="${M.l}" y1="${M.b}" x2="${M.r}" y2="${M.b}"/><line class="axis" x1="${M.l}" y1="${M.t}" x2="${M.l}" y2="${M.b}"/>`;
+  g += `<text class="ax-label" x="${M.r}" y="${M.b+34}" text-anchor="end">Техническая глубина →</text>`;
+  g += `<text class="ax-label" x="${M.l}" y="${M.b+34}">Готовые сервисы</text>`;
+  g += `<text class="ax-label" transform="translate(${M.l-26} ${M.b}) rotate(-90)">Для себя</text>`;
+  g += `<text class="ax-label" transform="translate(${M.l-26} ${M.t+140}) rotate(-90)" text-anchor="end">Для бизнеса →</text>`;
+  g += `<text class="quad" x="${px(.04)}" y="${py(.04)}">Личная продуктивность</text>`;
+  g += `<text class="quad" x="${px(.04)}" y="${py(.94)}">Управление и стратегия</text>`;
+  g += `<text class="quad" x="${px(.96)}" y="${py(.94)}" text-anchor="end">Внедрение и автоматизация</text>`;
+  g += `<text class="quad" x="${px(.96)}" y="${py(.04)}" text-anchor="end">Свои инструменты</text>`;
+  if(you) g += `<line class="link" id="${svg.id}-link" x1="0" y1="0" x2="0" y2="0"/>`;
+  COURSES.forEach(c => {
+    const right = c.x > .7;
+    g += `<g class="dot" data-id="${c.id}" transform="translate(${px(c.x)} ${py(c.y)})">
+      <circle class="halo" r="26" fill="${c.color}"/>
+      <circle r="9" fill="${c.color}" stroke="#faf9f5" stroke-width="2.5"/>
+      <text x="${right?-16:16}" y="4" text-anchor="${right?'end':'start'}">${esc(c.title)}</text></g>`;
+  });
+  if(you) g += `<g class="you" id="${svg.id}-you"><circle r="15" fill="none" stroke="#141413" stroke-width="1.5" stroke-dasharray="3 3"/><circle r="5" fill="#141413"/>
+    <text y="42" text-anchor="middle" style="font:600 13px var(--sans)">Вы</text></g>`;
+  svg.innerHTML = g;
+}
+
+/* ---------- 2. scrolly ---------- */
+const STEPS = [
+  { eyebrow:'Все курсы', title:'Пять программ, четыре угла', text:'Курсы расходятся по всей карте — от личной продуктивности до технического внедрения. Прокрутите, чтобы пройтись по каждому.', focus:null },
+  ...COURSES.map((c,i) => ({ eyebrow:`${String(i+1).padStart(2,'0')} · ${c.school}`, title:c.title, text:c.story, focus:c.id,
+     facts:[c.duration, 'от '+fmt(c.price), c.level] })),
+  { eyebrow:'Итог', title:'Двигайтесь слева направо', text:'Хорошая траектория — начать с левой части карты, а затем, когда появятся реальные задачи, переходить к внедрению и агентам.', focus:'all' },
+];
+$('#steps').innerHTML = STEPS.map((s,i) => `<div class="step" data-i="${i}"><div class="card">
+  <span class="eyebrow">${esc(s.eyebrow)}</span><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>
+  ${s.facts?`<div class="facts">${s.facts.map(f=>`<span>${esc(f)}</span>`).join('')}</div>`:''}</div></div>`).join('');
+buildMap($('#storyMap'));
+function setStep(i){
+  const s = STEPS[i], svg = $('#storyMap');
+  document.querySelectorAll('.step').forEach(el => el.classList.toggle('on', +el.dataset.i===i));
+  svg.classList.toggle('dim', !!s.focus && s.focus!=='all');
+  svg.classList.toggle('show-labels', s.focus==='all' || s.focus===null);
+  svg.querySelectorAll('.dot').forEach(d => d.classList.toggle('focus', d.dataset.id===s.focus));
+}
+const stepIO = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) setStep(+e.target.dataset.i); }),
+  { rootMargin:'-45% 0px -45% 0px' });
+document.querySelectorAll('.step').forEach(el => stepIO.observe(el));
+setStep(0);
+
+/* ---------- 3. scenario explorer ---------- */
+const sc = { goal:'business', tech:30, months:2, budget:60000 };
+$('#goal').innerHTML = TOPICS.map(t => `<button class="pill" data-g="${t.id}">${t.label}</button>`).join('');
+buildMap($('#youMap'), { you:true });
+$('#rank').innerHTML = COURSES.map(c => `<li data-id="${c.id}">
+  <div class="r-top"><b>${esc(c.title)}</b><span>0%</span></div><div class="r-school">${esc(c.school)}</div>
+  <div class="bar"><i style="width:0;background:${c.color}"></i></div></li>`).join('');
+
+function scoreOf(c){
+  const goal = c.topics.includes(sc.goal) ? 1 : (c.topics[0]==='business' && sc.goal==='marketing' ? .25 : 0);
+  const tech = 1 - Math.abs(sc.tech/100 - c.x);
+  const time = c.durationMonths <= sc.months ? 1 : Math.max(0, 1 - (c.durationMonths - sc.months)/2);
+  const money = c.price <= sc.budget ? 1 : Math.max(0, 1 - (c.price - sc.budget)/40000);
+  return Math.round(goal*40 + tech*25 + time*20 + money*15);
+}
+function fillRange(el){ el.style.setProperty('--fill', ((el.value-el.min)/(el.max-el.min)*100)+'%'); }
+function updateScenario(){
+  $('#techOut').textContent = sc.tech<34 ? 'пользователь' : sc.tech<67 ? 'продвинутый' : 'инженер';
+  $('#monthsOut').textContent = String(sc.months).replace('.',',') + ' мес';
+  $('#budgetOut').textContent = fmt(sc.budget);
+  document.querySelectorAll('#goal .pill').forEach(b => b.classList.toggle('on', b.dataset.g===sc.goal));
+  document.querySelectorAll('.controls input').forEach(fillRange);
+
+  const scored = COURSES.map(c => ({ c, s:scoreOf(c) })).sort((a,b) => b.s - a.s);
+  // FLIP-анимация перестановки
+  const list = $('#rank'), items = [...list.children];
+  const first = new Map(items.map(li => [li.dataset.id, li.getBoundingClientRect().top]));
+  scored.forEach(({c,s},i) => {
+    const li = list.querySelector(`[data-id="${c.id}"]`);
+    li.querySelector('.r-top span').textContent = s + '%';
+    li.querySelector('.bar i').style.width = s + '%';
+    li.classList.toggle('lead', i===0);
+    list.appendChild(li);
+  });
+  if(!reduce) [...list.children].forEach(li => {
+    const dy = first.get(li.dataset.id) - li.getBoundingClientRect().top;
+    if(!dy) return;
+    li.animate([{ transform:`translateY(${dy}px)` }, { transform:'none' }], { duration:600, easing:'cubic-bezier(.22,.8,.26,1)' });
+  });
+
+  // точка «Вы» и связь с лучшим курсом
+  const ty = TOPICS.find(t=>t.id===sc.goal).y;
+  const ux = px(sc.tech/100), uy = py(ty);
+  $('#youMap-you').setAttribute('transform', `translate(${ux} ${uy})`);
+  const best = scored[0].c, link = $('#youMap-link');
+  link.setAttribute('x1', ux); link.setAttribute('y1', uy);
+  link.setAttribute('x2', px(best.x)); link.setAttribute('y2', py(best.y));
+  document.querySelectorAll('#youMap .dot').forEach(d => d.classList.toggle('focus', d.dataset.id===best.id));
+  $('#verdict').innerHTML = `Лучше всего подходит <b>«${esc(best.title)}»</b> от ${esc(best.school)} — ${best.duration}, от ${fmt(best.price)}. <a href="#c-${best.id}" data-open="${best.id}">Подробнее&nbsp;→</a>`;
+}
+$('#goal').addEventListener('click', e => { const b = e.target.closest('.pill'); if(b){ sc.goal = b.dataset.g; updateScenario(); } });
+['tech','months','budget'].forEach(id => $('#'+id).addEventListener('input', e => { sc[id] = +e.target.value; updateScenario(); }));
+updateScenario();
+
+/* ---------- 4. findings ---------- */
+function hbars(el, key, label, max){
+  const rows = [...COURSES].sort((a,b) => a[key]-b[key]);
+  el.innerHTML = rows.map(c => `<li><span class="t">${esc(c.title)}<small>${esc(c.school)}</small></span>
+    <span class="track"><i style="background:${c.color}" data-w="${c[key]/max*100}"></i></span><span class="v">${label(c)}</span></li>`).join('');
+}
+hbars($('#barsDur'), 'durationMonths', c => c.duration.replace('~',''), 6);
+hbars($('#barsPrice'), 'price', c => Math.round(c.price/1000)+' тыс', 100000);
+const LV = ['С нуля','Базовый','Средний'];
+const nBeg = COURSES.filter(c=>c.levelKey===0).length;
+$('#lvlTitle').textContent = `${nBeg} из ${COURSES.length} курсов подходят новичкам`;
+$('#levels').innerHTML = LV.map((l,i) => `<div><span class="eyebrow">${l}</span>${COURSES.filter(c=>c.levelKey===i)
+  .map(c => `<div class="chip"><i style="background:${c.color}"></i>${esc(c.title)}</div>`).join('') || '<div class="chip" style="color:var(--muted)">—</div>'}</div>`).join('');
+
+/* ---------- 5. catalog ---------- */
+const cat = { topic:'all', open:null };
+function renderTabs(){
+  const all = [{ id:'all', label:'Все' }, ...TOPICS];
+  $('#tabs').innerHTML = all.map(t => {
+    const n = t.id==='all' ? COURSES.length : COURSES.filter(c=>c.topics.includes(t.id)).length;
+    return `<button class="tab ${cat.topic===t.id?'on':''}" data-t="${t.id}">${t.label}<sup>${n}</sup></button>`;
+  }).join('');
+}
+function renderList(){
+  const rows = COURSES.filter(c => cat.topic==='all' || c.topics.includes(cat.topic));
+  $('#list').innerHTML = rows.map((c,i) => `<li class="row ${cat.open===c.id?'open':''}" id="c-${c.id}" style="animation-delay:${i*60}ms">
+    <button class="row-head" data-id="${c.id}" aria-expanded="${cat.open===c.id}">
+      <span class="n">${String(i+1).padStart(2,'0')}</span>
+      <span><h3>${esc(c.title)}</h3><span class="sub"><i style="background:${c.color}"></i>${esc(c.school)} · ${c.topics.map(topicLabel).join(', ')}</span></span>
+      <span class="m"><small>Срок</small>${c.duration}</span>
+      <span class="m"><small>Цена от</small>${fmt(c.price)}</span>
+      <span class="plus" aria-hidden="true"></span>
+    </button>
+    <div class="row-body"><div><div class="row-inner">
+      <span></span>
+      <div><p>${esc(c.desc)}</p><ul>${c.skills.map(id => `<li>${SKILLS.find(s=>s.id===id).label}</li>`).join('')}</ul></div>
+      <div class="spec">
+        <div><span>Уровень</span><b>${c.level}</b></div>
+        <div><span>Длительность</span><b>${c.duration}</b></div>
+        <div><span>Цена от</span><b>${fmt(c.price)}</b></div>
+        <div><span>Формат</span><b>${esc(c.format)}</b></div>
+        <div><span>Для кого</span><b>${esc(c.audience)}</b></div>
+        <div><span>Документ</span><b>${esc(c.result)}</b></div>
+        <a class="go" href="${c.url}" target="_blank" rel="noopener">На сайт школы <span>→</span></a>
+      </div>
+    </div></div></div></li>`).join('');
+}
+$('#tabs').addEventListener('click', e => { const t = e.target.closest('.tab'); if(!t) return; cat.topic = t.dataset.t; renderTabs(); renderList(); });
+$('#list').addEventListener('click', e => {
+  const h = e.target.closest('.row-head'); if(!h) return;
+  const id = h.dataset.id; cat.open = cat.open===id ? null : id;
+  document.querySelectorAll('.row').forEach(r => {
+    const on = r.id === 'c-'+cat.open; r.classList.toggle('open', on);
+    r.querySelector('.row-head').setAttribute('aria-expanded', on);
+  });
+});
+$('#verdict').addEventListener('click', e => {
+  const a = e.target.closest('[data-open]'); if(!a) return;
+  e.preventDefault(); cat.topic = 'all'; cat.open = a.dataset.open; renderTabs(); renderList();
+  $('#c-'+cat.open).scrollIntoView({ behavior: reduce?'auto':'smooth', block:'center' });
+});
+renderTabs(); renderList();
+
+/* ---------- reveal on scroll ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if(!e.isIntersecting) return;
+  e.target.classList.add('in');
+  e.target.querySelectorAll('.track i').forEach((b,i) => setTimeout(() => b.style.width = b.dataset.w+'%', 150 + i*90));
+  io.unobserve(e.target);
+}), { threshold:.2 });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
